@@ -3,6 +3,9 @@ package com.example.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Product;
@@ -36,6 +39,11 @@ public class ProductService {
 		Product existingProduct = productRepository.findById(id).orElseThrow();
 		 productRepository.delete(existingProduct);
 		 return true;
+	}
+
+	public Page<Product> getProducts(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findAll(pageable);
 	}
 	
 }
